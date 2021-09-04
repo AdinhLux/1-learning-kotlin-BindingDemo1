@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun displayGreeting() {
-        binding.greetingTextView.text = "Hello! " + binding.nameEditText.text
+        // Reduce the repetition of the name of the data binding object
+        binding.apply {
+            greetingTextView.text = "Hello! " + nameEditText.text
+        }
     }
 }
