@@ -1,28 +1,36 @@
 package com.anushka.bindingdemo1
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.anushka.bindingdemo1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    /*
+     * Object binding to activity_main.xml layout
+     *
+     * lateinit is used for creating a variable but you don't want to initialize it
+     * at the time of declaration/creation of the variable
+     * because you are sure that the variable will be initialized before its access/usage.
+     *
+     * var means your 'binding' is a mutable variable (contrary to 'val')
+     */
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val button = findViewById<Button>(R.id.submit_button)
-        button.setOnClickListener {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        // From activity_main.xml, id = 'submit_button'
+        binding.submitButton.setOnClickListener {
             displayGreeting()
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun displayGreeting() {
-        val messageView = findViewById<TextView>(R.id.greeting_text_view)
-        val nameText = findViewById<EditText>(R.id.name_edit_text)
-
-        val message = "Hello! "+ nameText.text
-        messageView.text = message
+        binding.greetingTextView.text = "Hello! " + binding.nameEditText.text
     }
 }
